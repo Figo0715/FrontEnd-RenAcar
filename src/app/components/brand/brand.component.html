@@ -1,5 +1,6 @@
 <ul class="list-group">
     <h2>Kategoriler</h2>
+    <li routerLink="/cars" [class]="getAllBrandClass()">Tüm Modeller</li>
     <li (click)="setCurrentBrand(brand)" routerLink="/cars/brand/{{brand.id}}"  *ngFor="let brand of brands" [class]="getCurrentBrandClass(brand)">{{brand.name}}</li>
     
   </ul>
