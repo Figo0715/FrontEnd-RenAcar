@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations"
 
 import { AppRoutingModule } from './app-routing.module';
@@ -9,11 +9,19 @@ import { AppComponent } from './app.component';
 import { CarComponent } from './components/car/car.component';
 import { BrandComponent } from './components/brand/brand.component';
 import { NaviComponent } from './components/navi/navi.component';
+import { CartSummaryComponent } from './components/cart-summary/cart-summary.component';
 import { VatAddedPipe } from './pipes/vat-added.pipe';
-import { FilterPipePipe } from './pipes/filter-pipe.pipe';
+import { FilterCarPipe } from './pipes/filter-car.pipe';
 
 import { ToastrModule } from 'ngx-toastr';
-import { CartSummaryComponent } from './components/cart-summary/cart-summary.component';
+import { FilterBrandPipe } from './pipes/filter-brand.pipe';
+import { FilterColorPipe } from './pipes/filter-color.pipe';
+import { CarAddComponent } from './components/car-add/car-add.component';
+import { LoginComponent } from './components/login/login.component';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
+
+
+
 
 @NgModule({
   declarations: [
@@ -22,8 +30,14 @@ import { CartSummaryComponent } from './components/cart-summary/cart-summary.com
     BrandComponent,
     NaviComponent,
     VatAddedPipe,
-    FilterPipePipe,
-    CartSummaryComponent
+    FilterCarPipe,
+    CartSummaryComponent,
+    FilterBrandPipe,
+    FilterColorPipe,
+    CarAddComponent,
+    LoginComponent
+    
+       
   ],
   imports: [
     BrowserModule,
@@ -31,11 +45,14 @@ import { CartSummaryComponent } from './components/cart-summary/cart-summary.com
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
+    ReactiveFormsModule,
     ToastrModule.forRoot({
       positionClass:"toast-bottom-right"
     })
   ],
-  providers: [],
+  providers: [
+    {provide:HTTP_INTERCEPTORS,useClass:AuthInterceptor,multi:true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
